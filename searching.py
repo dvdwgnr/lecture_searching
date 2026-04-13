@@ -46,11 +46,9 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
 def binary_search(numbers, hledane):
-    left = 0
     right = len(numbers) - 1
+    left = 0
     while left <= right:
         prostredek = (left + right) // 2
         if numbers[prostredek] == hledane:
@@ -74,3 +72,35 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import time
+import random
+import matplotlib.pyplot as plt
+from generators import unordered_sequence, ordered_sequence
+
+def linear_search(arr, x):
+    for i in range(len(arr)):
+        if arr[i] == x:
+            return i
+    return -1
+
+def binary_search(arr, x):
+    left = 0
+    right = len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == x:
+            return mid
+        elif arr[mid] < x:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return -1
+
+sizes = [100, 500, 1000, 5000, 10000]
+
+linear_times = []
+binary_times = []
+set_times = []
+
