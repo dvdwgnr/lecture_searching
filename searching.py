@@ -1,8 +1,8 @@
-from pathlib import Path
 import json
 
 
 def read_data(file_name, field):
+    allowed_fields = ['unordered_numbers', 'ordered_numbers', 'dna_sequence']
     """
     Reads a JSON file and returns data for a given field.
 
@@ -17,15 +17,31 @@ def read_data(file_name, field):
             - str: If field is 'dna_sequence'.
             - None: If the field is not supported.
     """
-    # get current working directory path
-    cwd_path = Path.cwd()
-    
-    file_path = cwd_path / file_name
+    if field not in allowed_fields:
+        return None
+    with open(file_name, 'r') as f:
+        data = json.load(f)
+    return data.get(field)
 
+
+def linear_search(sequence, target):
+    positions = []
+    for i, value in enumerate(sequence):
+        if value == target:
+            positions.append(i)
+    return {
+        "positions": positions,
+        "count": len(positions)
+    }
 
 def main():
-    pass
+    sequential_data = read_data("sequential.json", "unordered_numbers")
+    target_number = 5
+    result = linear_search(sequential_data, target_number)
 
+    print("Data:", sequential_data)
+    print("Hledané číslo:", target_number)
+    print("Výsledek:", result)
 
 if __name__ == "__main__":
     main()
