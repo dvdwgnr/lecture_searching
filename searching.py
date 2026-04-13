@@ -30,18 +30,47 @@ def linear_search(sequence, target):
         if value == target:
             positions.append(i)
     return {
-        "positions": positions,
-        "count": len(positions)
+        "pozice": positions,
+        "pocet": len(positions)
     }
 
 def main():
     sequential_data = read_data("sequential.json", "unordered_numbers")
-    target_number = 5
+    target_number = 0
     result = linear_search(sequential_data, target_number)
 
     print("Data:", sequential_data)
-    print("Hledané číslo:", target_number)
-    print("Výsledek:", result)
+    print("Naše číslo:", target_number)
+    print("celkem:", result)
+
+if __name__ == "__main__":
+    main()
+
+
+
+def binary_search(numbers, hledane):
+    left = 0
+    right = len(numbers) - 1
+    while left <= right:
+        prostredek = (left + right) // 2
+        if numbers[prostredek] == hledane:
+            return prostredek
+        elif numbers[prostredek] < hledane:
+            left = prostredek + 1
+        else:
+            right = prostredek - 1
+    return None
+
+def main():
+    with open("sequential.json", "r") as file:
+        data = json.load(file)
+    numbers = data["ordered_numbers"]
+    hledane = 2
+    result = binary_search(numbers, hledane)
+    if result is not None:
+        print(f"Číslo {hledane} je na {result}. pozici v seznamu.")
+    else:
+        print(f"Číslo {hledane} není v seznamu :(  .")
 
 if __name__ == "__main__":
     main()
